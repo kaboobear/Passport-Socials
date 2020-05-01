@@ -57,26 +57,6 @@ passport.use(new GitHubStrategy({
   }
 ));
 
-// passport.use(new TwitterStrategy({
-//     clientID: '08ef72ed0e69ffd7cf1a',
-//     clientSecret: 'f0eefb55622b8663a845be0d0a04e8eb4a3fb6f2',
-//     callbackURL: "/user/twitter/callback"
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     let {login,email}=profile._json
-//     if(email === null) return done(null, false, { error:true })
-
-//     User.findOne({'mail':email},(err,user)=>{
-//         if(err) return done(err);
-//         if(user)return done(null,user)
-//         else{
-//             const newUser = new User({username:login,mail:email,password:'social'});
-//             newUser.save().then(createdUser=> done(null,createdUser))
-//                           .catch(err => {console.log(err)})
-//         }
-//     })
-//   }
-// ));
 
 passport.use(new FacebookStrategy({
     clientID: '2335655800048641',
