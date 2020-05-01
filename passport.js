@@ -105,8 +105,8 @@ passport.use(new GoogleStrategy({
     callbackURL: "/user/google/callback",
   },
   function(accessToken, refreshToken, profile, done) {
-    let email = profile.emails.value;
-    let login = profile.displayName;
+    // let email = profile.emails.value;
+    // let login = profile.displayName;
 
     return done(profile);
     // if(email === null) return done(null, false, { error:true })
