@@ -96,15 +96,15 @@ class Login extends React.Component {
 
                         <div className="log-btns">
                             <div className="log-btn-wrap">
-                                <a href="http://localhost:5000/user/github"></a>
+                                <a href="/user/github"></a>
                             </div>
 
                             <div className="log-btn-wrap">
-                                <a href="http://localhost:5000/user/facebook"></a>
+                                <a href="/user/facebook"></a>
                             </div>
 
                             <div className="log-btn-wrap">
-                                <a href="http://localhost:5000/user/google"></a>
+                                <a href="/user/google"></a>
                             </div>
                         </div>
 
