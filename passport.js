@@ -4,6 +4,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('./models/user_model');
 
 
@@ -29,33 +30,16 @@ passport.use(new JwtStrategy({jwtFromRequest:cookieExtractor,secretOrKey:"kaboo"
     })
 }))
 
+
+
+
+
+
+
 passport.use(new GitHubStrategy({
     clientID: '08ef72ed0e69ffd7cf1a',
     clientSecret: 'f0eefb55622b8663a845be0d0a04e8eb4a3fb6f2',
     callbackURL: "/user/github/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    let {login,email}=profile._json
-    if(email === null) return done(null, false, { error:true })
-
-    User.findOne({'mail':email},(err,user)=>{
-        if(err) return done(err);
-        if(user)return done(null,user)
-        else{
-            const newUser = new User({username:login,mail:email,password:'social'});
-            newUser.save().then(createdUser=> done(null,createdUser))
-                          .catch(err => {console.log(err)})
-        }
-    })
-  }
-));
-
-
-
-passport.use(new FacebookStrategy({
-    clientID: '2335655800048641',
-    clientSecret: '5c77ae2592dbae2f1aa19477dcb99f84',
-    callbackURL: "/user/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     let {login,email}=profile._json
@@ -93,6 +77,51 @@ passport.use(new FacebookStrategy({
 //     })
 //   }
 // ));
+
+passport.use(new FacebookStrategy({
+    clientID: '2335655800048641',
+    clientSecret: '5c77ae2592dbae2f1aa19477dcb99f84',
+    callbackURL: "/user/facebook/callback",
+  },
+  function(accessToken, refreshToken, profile, done) {
+    let {login,email}=profile._json
+    if(email === null) return done(null, false, { error:true })
+
+    User.findOne({'mail':email},(err,user)=>{
+        if(err) return done(err);
+        if(user)return done(null,user)
+        else{
+            const newUser = new User({username:login,mail:email,password:'social'});
+            newUser.save().then(createdUser=> done(null,createdUser))
+                          .catch(err => {console.log(err)})
+        }
+    })
+  }
+));
+
+passport.use(new GoogleStrategy({
+    clientID: '975145693230-jnjccoc9np1fk55qbtrelf8isekqa8kg.apps.googleusercontent.com',
+    clientSecret: '_bGDJRatDkW0R5sn2XTDRIL_',
+    callbackURL: "/user/google/callback",
+  },
+  function(accessToken, refreshToken, profile, done) {
+    let {login,email}=profile._json
+    if(email === null) return done(null, false, { error:true })
+
+    User.findOne({'mail':email},(err,user)=>{
+        if(err) return done(err);
+        if(user)return done(null,user)
+        else{
+            const newUser = new User({username:login,mail:email,password:'social'});
+            newUser.save().then(createdUser=> done(null,createdUser))
+                          .catch(err => {console.log(err)})
+        }
+    })
+  }
+));
+
+
+
 
 passport.serializeUser((user,done)=>done(null,user));
 passport.deserializeUser((user,done)=>done(null,user));
