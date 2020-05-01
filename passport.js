@@ -1,0 +1,98 @@
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
+const User = require('./models/user_model');
+
+
+const cookieExtractor = req => {
+    let token = null;
+    if(req && req.cookies) token = req.cookies['access_token'];
+    return token;
+}
+
+passport.use(new LocalStrategy((username,password,done)=>{
+    User.findOne({$or:[{'username':username},{'mail':username}]},(err,user)=>{
+        if(err) return done(err);
+        if(!user) return done(null,{errors:{mail: "User not found"},error:true});
+        user.comparePassword(password,done); 
+    })
+}))
+
+passport.use(new JwtStrategy({jwtFromRequest:cookieExtractor,secretOrKey:"kaboo"}, (payload,done)=>{
+    User.findById({_id:payload.sub},(err,user)=>{
+        if(err) return done(err,false);
+        if(user) return done(null,user);
+        return done(null,false);
+    })
+}))
+
+passport.use(new GitHubStrategy({
+    clientID: '08ef72ed0e69ffd7cf1a',
+    clientSecret: 'f0eefb55622b8663a845be0d0a04e8eb4a3fb6f2',
+    callbackURL: "/user/github/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    let {login,email}=profile._json
+    if(email === null) return done(null, false, { error:true })
+
+    User.findOne({'mail':email},(err,user)=>{
+        if(err) return done(err);
+        if(user)return done(null,user)
+        else{
+            const newUser = new User({username:login,mail:email,password:'social'});
+            newUser.save().then(createdUser=> done(null,createdUser))
+                          .catch(err => {console.log(err)})
+        }
+    })
+  }
+));
+
+
+
+passport.use(new FacebookStrategy({
+    clientID: '08ef72ed0e69ffd7cf1a',
+    clientSecret: 'f0eefb55622b8663a845be0d0a04e8eb4a3fb6f2',
+    callbackURL: "/user/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    let {login,email}=profile._json
+    if(email === null) return done(null, false, { error:true })
+
+    User.findOne({'mail':email},(err,user)=>{
+        if(err) return done(err);
+        if(user)return done(null,user)
+        else{
+            const newUser = new User({username:login,mail:email,password:'social'});
+            newUser.save().then(createdUser=> done(null,createdUser))
+                          .catch(err => {console.log(err)})
+        }
+    })
+  }
+));
+
+// passport.use(new TwitterStrategy({
+//     clientID: '08ef72ed0e69ffd7cf1a',
+//     clientSecret: 'f0eefb55622b8663a845be0d0a04e8eb4a3fb6f2',
+//     callbackURL: "/user/twitter/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     let {login,email}=profile._json
+//     if(email === null) return done(null, false, { error:true })
+
+//     User.findOne({'mail':email},(err,user)=>{
+//         if(err) return done(err);
+//         if(user)return done(null,user)
+//         else{
+//             const newUser = new User({username:login,mail:email,password:'social'});
+//             newUser.save().then(createdUser=> done(null,createdUser))
+//                           .catch(err => {console.log(err)})
+//         }
+//     })
+//   }
+// ));
+
+passport.serializeUser((user,done)=>done(null,user));
+passport.deserializeUser((user,done)=>done(null,user));

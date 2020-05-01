@@ -1,149 +1,109 @@
 import React from 'react';
-
-import MyContext from './contextAPI'
-
-import axios from 'axios'
-import jwt_decode from "jwt-decode";
-import notify from "./notifications";
-import ApiUrl from '../constants';
-import {Cont} from './contextAPI'
 import {withRouter} from 'react-router-dom'
+import {login} from '../actions/authActions'
+import {clearErrors} from '../actions/errorActions'
+import {connect} from 'react-redux'
+
 
 class Login extends React.Component {
-    login(e) {
+    state = {
+        mail: '',
+        pass: '',
+        msg: {}
+    }
+
+    onChange = (e) => {
+        const {value, name} = e.target;
+        this.setState({[name]: value})
+    }
+
+    onSubmit = (e) => {
         e.preventDefault();
 
-        var loginData = {
-            mail: this.context.state.authInput.mail,
-            pass: this.context.state.authInput.pass
+        const loginData = {
+            username: this.state.mail,
+            password: this.state.pass
         }
 
-        axios
-            .post(ApiUrl + "/auth/login/", loginData)
-            .then(res => {
-                notify.notifyFour();
-
-                localStorage.removeItem("jwtToken");
-                this
-                    .context
-                    .state
-                    .setAuthToken(false);
-
-                const {token} = res.data;
-
-                localStorage.setItem("jwtToken", token);
-                this
-                    .context
-                    .state
-                    .setAuthToken(token);
-
-                const decoded = jwt_decode(token);
-
-                this
-                    .context
-                    .state
-                    .setAuth(true, decoded);
-
-
-                axios
-                    .post(ApiUrl + '/auth/friends', decoded.friendsArray)
-                    .then(res => {
-                        console.log(res.data);
-                        console.log("xx");
-
-                        this.context
-                            .state
-                            .setFriends(res.data);
-
-                        this
-                            .context
-                            .state
-                            .setAuthInput('', '', '', '');
-
-                        this
-                            .context
-                            .state
-                            .setAuthErrors({login: '', mail: '', pass: '', pass2: ''});
-
-                        this
-                            .props
-                            .history
-                            .push('/');
-                    })
-
-            })
-            .catch(err => {
-                this
-                    .context
-                    .state
-                    .setAuthErrors(err.response.data);
-            });
+        this
+            .props
+            .login(loginData);
     }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.isAuth === true) {
+            this
+                .props
+                .clearErrors();
+            return this
+                .props
+                .history
+                .push('/')
+        }
+
+        const error = this.props.error;
+        if (error !== prevProps.error) {
+            if (error.id === "LOGIN_FAIL") 
+                this.setState({msg: error.msg})
+            else 
+                this.setState({msg: {}});
+            }
+        }
 
     componentWillUnmount() {
         this
-            .context
-            .state
-            .setAuthErrors({login: '', mail: '', pass: '', pass2: ''});
+            .props
+            .clearErrors();
     }
 
     render() {
         return (
-            <MyContext>
-                {(context) => (
-                    <div className="login-section">
-                        <div className="flex-wrap center">
-                            <form
-                                onSubmit={(e) => {
-                                this.login(e)
-                            }}
-                                className="add-form"
-                                autoComplete="off">
-                                <div className="simple-input">
-                                    <input
-                                        type="text"
-                                        name="mail"
-                                        placeholder="Mail"
-                                        value={context.state.authInput.mail}
-                                        onChange={context.state.handleChange2}
-                                        className={this.context.state.authErrors.mail && "error"}/> {this.context.state.authErrors.mail && (
-                                        <div className="exclam">
-                                            <img src="img/exclam-ico.png" alt=""/>
-                                        </div>
-                                    )}
+            <div className="login-section">
+
+                <h2 className="log-title">Login</h2>
+
+                <div className="flex-wrap center">
+                    <form onSubmit={this.onSubmit} className="add-form" autoComplete="off">
+                        <div className="simple-input">
+                            <input
+                                type="text"
+                                name="mail"
+                                placeholder="Mail"
+                                value={this.state.mail}
+                                onChange={this.onChange}
+                                className={this.state.msg.mail && "error"}/> {this.state.msg.mail && (
+                                <div className="exclam">
+                                    <img src="img/exclam-ico.png" alt=""/>
                                 </div>
-
-                                <div className="simple-input">
-                                    <input
-                                        type="password"
-                                        name="pass"
-                                        placeholder="Password"
-                                        className={this.context.state.authErrors.pass && "error"}
-                                        value={context.state.authInput.pass}
-                                        onChange={context.state.handleChange2}/> {this.context.state.authErrors.pass && (
-                                        <div className="exclam">
-                                            <img src="img/exclam-ico.png" alt=""/>
-                                        </div>
-                                    )}
-
-                                    {/* {this.context.state.authErrors.pass && (
-                                        <span className="error-message">
-                                            {this.context.state.authErrors.pass}
-                                        </span>
-                                        )} */}
-                                </div>
-
-                                <button type="submit" className="btn">Sign In</button>
-
-                            </form>
+                            )}
                         </div>
-                    </div>
-                )}
-            </MyContext>
+
+                        <div className="simple-input">
+                            <input
+                                type="password"
+                                name="pass"
+                                placeholder="Password"
+                                value={this.state.pass}
+                                onChange={this.onChange}
+                                className={this.state.msg.pass && "error"}/> {this.state.msg.pass && (
+                                <div className="exclam">
+                                    <img src="img/exclam-ico.png" alt=""/>
+                                </div>
+                            )}
+                        </div>
+
+                        <button type="submit" className="btn">Sign In</button>
+
+                        <a href="http://localhost:5000/user/github">Github</a>
+                        <a href="http://localhost:5000/user/twitter">Twitter</a>
+
+                    </form>
+                </div>
+            </div>
         );
     }
-
 }
 
-Login.contextType = Cont;
-export default withRouter(Login);
+const mapStateToProps = state => ({isAuth: state.auth.isAuthenticated, error: state.error})
+
+export default withRouter(connect(mapStateToProps, {login, clearErrors})(Login));

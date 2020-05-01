@@ -1,101 +1,49 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
+import Header from './components/header'
+import Main from './components/main'
+import Admin from './components/admin'
+import Login from './components/login'
+import Register from './components/register'
+import PrivateRoute from './hoc/privateRoute'
+import UnprivateRoute from './hoc/unprivateRoute'
 import './App.css';
-import 'react-toastify/dist/ReactToastify.min.css';
 
-import Login from './components/login';
-import Register from './components/register';
-import Posts from './components/posts';
-import Navbar from './components/navbar';
-import Users from './components/users';
-import Friend from './components/friend';
-
-import {MyProvider} from './components/contextAPI';
-import {Cont} from './components/contextAPI';
-import MyContext from './components/contextAPI';
-import $ from 'jquery';
-
-import {BrowserRouter as Router, NavLink, Route, Redirect} from 'react-router-dom';
-import {ToastContainer} from 'react-toastify';
+import store from './store';
+import {Provider} from 'react-redux';
+import {loadUser} from './actions/authActions'
 
 class App extends React.Component {
-
     componentDidMount() {
-        $('.tabs-buttons')
-            .on('click', 'li:not(.active)', function () {
-                $(this)
-                    .addClass('active')
-                    .siblings()
-                    .removeClass('active')
-                    .parent()
-                    .next('.tabs-items')
-                    .find('.tabs-item')
-                    .fadeOut(0)
-                    .removeClass('active')
-                    .eq($(this).index())
-                    .fadeIn(0)
-                    .addClass('active');
-            });
+        store.dispatch(loadUser())
     }
 
     render() {
         return (
-            <Router>
-                <MyProvider>
-                    <MyContext>
-                        {(context) => (
-                            <div className="wrapper">
-                                <div className="content-section">
-                                    <div className="container">
-                                        {(context.state.authInfo.isAuth)
-                                            ? (
-                                                <div className="flex-wrap">
-                                                    <Navbar/>
+            <Provider store={store}>
+                <Router>
+                    <div className="wrapper">
+                        <Header/>
 
-                                                    <div className="main-section">
-                                                        {(context.state.isLoaded) && (
-                                                            <div>
-                                                                <Route path="/" exact component={Posts}/>
-                                                                <Route path="/user/:id" exact strict component={Friend}/>
-                                                            </div>
-                                                        )}
-                                                    </div>
+                        <div className="content-section">
+                            <div className="container">
+                                {/* <Route path='/' exact component={Main}/>
+                                <Route path='/admin' exact component={Admin}/>
+                                <Route path='/login' exact component={Login}/>
+                                <Route path='/register' exact component={Register}/> */}
+                                <PrivateRoute path="/" isAdmin={[0,1]} component={Main}/>
+                                <PrivateRoute path="/admin" isAdmin={[1]} component={Admin}/>
+                                <UnprivateRoute path="/login" component={Login}/>
+                                <UnprivateRoute path="/register" component={Register}/>
 
-                                                    <Users/>
-                                                </div>
-                                            )
-                                            : (
-                                                <div className="auth-section">
-                                                    <div className="tabs">
-                                                        <NavLink className="auth-logo" to="/">
-                                                            Sharie
-                                                        </NavLink>
-
-                                                        <ul className="tabs-buttons">
-                                                            <NavLink exact to="/">Login</NavLink>
-                                                            <NavLink exact to="/register">Registration</NavLink>
-                                                        </ul>
-
-                                                        <div className="tabs-items">
-                                                            <Route path="/" exact component={Login}/>
-                                                            <Route path="/register" exact component={Register}/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            )
-}
-                                    </div>
-                                </div>
-
-                                <ToastContainer containerId={'one'}/>
                             </div>
-                        )}
-                    </MyContext>
-                </MyProvider>
-            </Router>
+                        </div>
+                    </div>
+                </Router>
+            </Provider>
         );
     }
 }
 
-App.contextType = Cont
 export default App;

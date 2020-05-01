@@ -1,43 +1,51 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const path = require('path');
+const express = require("express");
+const mongoose = require("mongoose");
+const path = require("path");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const passport = require("passport");
+const db = require("./config/keys").mongoURI;
+const https = require('https');
+const fs = require('fs');
 
-require('dotenv').config();
+
+const user_route = require("./routes/user_route");
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-const uri = 'mongodb+srv://kaboo:123123nko@kaboo-dzvqk.mongodb.net/test?retryWrites=true&w=majority'
-mongoose.connect(uri, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true
-})
-
-const connection = mongoose.connection;
-connection.once('open', function () {
-    console.log('MongoDB is working');
-});
-
-const authRouter = require("./routes/auth.route");
-const postsRouter = require('./routes/posts.route');
-
-app.use('/posts', postsRouter);
+app.use(cors());
+app.use(cookieParser());
+app.use(session({secret:'kaboo',resave:true,saveUninitialized:true}))
 app.use(passport.initialize());
+app.use(passport.session());
 
-require("./config/passport")(passport);
-app.use("/auth", authRouter);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + 'client/build/index.html'));
-});
 
-app.listen(port, () => {
-    console.log('Server on port: ' + port);
-})
+mongoose
+    .connect(db,{ useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex:true })
+    .then(()=>{console.log("MongoDb was connected")})
+    .catch((err)=>{console.log(err);})
+
+app.use('/user',user_route);
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'));
+
+    app.get("*",(req,res)=>{
+        res.sendFile(path.resolve(__dirname,'client','build','index.html'));
+    })
+}
+
+app.listen(port,()=>{console.log(`Server started on port ${port}`)}) 
+
+
+
+
+// https.createServer({
+//     key: fs.readFileSync('server.key'),
+//     cert: fs.readFileSync('server.cert')
+//   }, app)
+//   .listen(port,()=>{console.log(`Server started on port ${port}`)}) 
