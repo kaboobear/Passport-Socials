@@ -129,7 +129,7 @@ router.get('/facebook/callback',passport.authenticate('facebook',{failureRedirec
 
 
 router.get('/google',
-  (passport.authenticate('google')));
+  (passport.authenticate('google',{ scope: ['profile'] })));
 
 router.get('/google/callback',passport.authenticate('google',{failureRedirect:"/login"}),function(req, res) {
     const {_id} = req.user;
