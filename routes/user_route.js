@@ -132,9 +132,9 @@ router.get('/google',
   (passport.authenticate('google',{ scope: ['profile'] })));
 
 router.get('/google/callback',passport.authenticate('google',{failureRedirect:"/login"}),function(req, res) {
-    const {_id} = req.user;
-    const token = signToken(_id);
-    res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
+    // const {_id} = req.user;
+    // const token = signToken(_id);
+    // res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
     res.redirect('/');
 });
 
