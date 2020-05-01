@@ -94,8 +94,8 @@ class Login extends React.Component {
 
                         <button type="submit" className="btn">Sign In</button>
 
-                        <a href="http://localhost:5000/user/github">Github</a>
-                        <a href="http://localhost:5000/user/twitter">Twitter</a>
+                        <a href="/user/github">Github</a>
+                        <a href="/user/twitter">Twitter</a>
 
                     </form>
                 </div>

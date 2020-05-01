@@ -89,11 +89,11 @@ router.get('/logout',passport.authenticate('jwt',{session : false}),(req,res)=>{
 router.get('/twitter',
   (passport.authenticate('twitter')));
 
-router.get('/twitter/callback',passport.authenticate('twitter',{failureRedirect:"http://localhost:3000/login"}),function(req, res) {
+router.get('/twitter/callback',passport.authenticate('twitter',{failureRedirect:"/login"}),function(req, res) {
     const {_id} = req.user;
     const token = signToken(_id);
     res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
-    res.redirect('http://localhost:3000/');
+    res.redirect('/');
 });
 
 
@@ -102,11 +102,11 @@ router.get('/twitter/callback',passport.authenticate('twitter',{failureRedirect:
 router.get('/facebook',
   (passport.authenticate('facebook')));
 
-router.get('/facebook/callback',passport.authenticate('facebook',{failureRedirect:"http://localhost:3000/login"}),function(req, res) {
+router.get('/facebook/callback',passport.authenticate('facebook',{failureRedirect:"/login"}),function(req, res) {
     const {_id} = req.user;
     const token = signToken(_id);
     res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
-    res.redirect('http://localhost:3000/');
+    res.redirect('/');
 });
 
 
@@ -115,11 +115,11 @@ router.get('/facebook/callback',passport.authenticate('facebook',{failureRedirec
 router.get('/github',
   (passport.authenticate('github')));
 
-router.get('/github/callback',passport.authenticate('github',{failureRedirect:"http://localhost:3000/login"}),function(req, res) {
+router.get('/github/callback',passport.authenticate('github',{failureRedirect:"/login"}),function(req, res) {
     const {_id} = req.user;
     const token = signToken(_id);
     res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
-    res.redirect('http://localhost:3000/');
+    res.redirect('/');
 });
 
 
