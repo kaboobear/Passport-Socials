@@ -84,7 +84,8 @@ passport.use(new FacebookStrategy({
     callbackURL: "/user/facebook/callback",
   },
   function(accessToken, refreshToken, profile, done) {
-    let {login,email}=profile._json
+    let email = profile.emails[0].value;
+    let login = profile.displayName;
     if(email === null) return done(null, false, { error:true })
 
     User.findOne({'mail':email},(err,user)=>{
@@ -105,21 +106,19 @@ passport.use(new GoogleStrategy({
     callbackURL: "/user/google/callback",
   },
   function(accessToken, refreshToken, profile, done) {
-    // let email = profile.emails.value;
-    // let login = profile.displayName;
+    let email = profile.emails[0].value;
+    let login = profile.displayName;
+    if(email === null) return done(null, false, { error:true })
 
-    return done(profile);
-    // if(email === null) return done(null, false, { error:true })
-
-    // User.findOne({'mail':email},(err,user)=>{
-    //     if(err) return done(err);
-    //     if(user)return done(null,user)
-    //     else{
-    //         const newUser = new User({username:login,mail:email,password:'social'});
-    //         newUser.save().then(createdUser=> done(null,createdUser))
-    //                       .catch(err => {console.log(err)})
-    //     }
-    // })
+    User.findOne({'mail':email},(err,user)=>{
+        if(err) return done(err);
+        if(user)return done(null,user)
+        else{
+            const newUser = new User({username:login,mail:email,password:'social'});
+            newUser.save().then(createdUser=> done(null,createdUser))
+                          .catch(err => {console.log(err)})
+        }
+    })
   }
 ));
 
