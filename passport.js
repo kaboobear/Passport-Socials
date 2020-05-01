@@ -100,8 +100,8 @@ passport.use(new FacebookStrategy({
 ));
 
 passport.use(new GoogleStrategy({
-    clientID: '975145693230-jnjccoc9np1fk55qbtrelf8isekqa8kg.apps.googleusercontent.com',
-    clientSecret: '_bGDJRatDkW0R5sn2XTDRIL_',
+    clientID: '1033091184223-f3a367k9fj16m63l3tjqf8o8sahu2alo.apps.googleusercontent.com',
+    clientSecret: 'h5AfooMfYo5lvT4gi7T7SDTA',
     callbackURL: "/user/google/callback",
   },
   function(accessToken, refreshToken, profile, done) {
