@@ -53,8 +53,8 @@ passport.use(new GitHubStrategy({
 
 
 passport.use(new FacebookStrategy({
-    clientID: '08ef72ed0e69ffd7cf1a',
-    clientSecret: 'f0eefb55622b8663a845be0d0a04e8eb4a3fb6f2',
+    clientID: '2335655800048641',
+    clientSecret: '5c77ae2592dbae2f1aa19477dcb99f84',
     callbackURL: "/user/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {

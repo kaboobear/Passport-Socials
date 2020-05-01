@@ -96,6 +96,7 @@ class Login extends React.Component {
 
                         <a href="/user/github">Github</a>
                         <a href="/user/twitter">Twitter</a>
+                        <a href="/user/facebook">Facebook</a>
 
                     </form>
                 </div>
