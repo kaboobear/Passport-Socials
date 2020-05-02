@@ -102,6 +102,27 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+passport.use(new TwitterStrategy({
+  clientID: 'W7VI3RuOTXwt7bFWagx0nUKXe',
+  clientSecret: 'wGwWPCIGl4O9Sc4Bcla6OcRMkGWm9xEzOSNsAch2A83SwR3qII',
+  callbackURL: "/user/twitter/callback",
+},
+function(accessToken, refreshToken, profile, done) {
+  let email = profile.emails[0].value;
+  let login = profile.displayName;
+  if(email === null) return done(null, false, { error:true })
+
+  User.findOne({'mail':email},(err,user)=>{
+      if(err) return done(err);
+      if(user)return done(null,user)
+      else{
+          const newUser = new User({username:login,mail:email,password:'social'});
+          newUser.save().then(createdUser=> done(null,createdUser))
+                        .catch(err => {console.log(err)})
+      }
+  })
+}
+));
 
 
 

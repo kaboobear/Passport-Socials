@@ -106,6 +106,10 @@ class Login extends React.Component {
                             <div className="log-btn-wrap">
                                 <a href="/user/google"></a>
                             </div>
+
+                            <div className="log-btn-wrap">
+                                <a href="/user/twitter"></a>
+                            </div>
                         </div>
 
                     </form>

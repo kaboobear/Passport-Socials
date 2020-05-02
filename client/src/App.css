@@ -506,6 +506,10 @@ textarea:focus::placeholder {
   background: #d44638;
 }
 
+.log-btn-wrap:nth-child(4) a{
+  background: #00acee;
+}
+
 .log-btn-wrap a:before {
   content: '';
   width: 30px;
@@ -526,6 +530,11 @@ textarea:focus::placeholder {
 
 .log-btn-wrap:nth-child(3) a:before{
   background: url(img/google.png) no-repeat center;
+  background-size: 90%;
+}
+
+.log-btn-wrap:nth-child(4) a:before{
+  background: url(img/tw.png) no-repeat center;
   background-size: 90%;
 }
 

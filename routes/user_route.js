@@ -125,6 +125,16 @@ router.get('/google/callback',passport.authenticate('google',{failureRedirect:"/
     res.redirect('/');
 });
 
+router.get('/twitter',
+  (passport.authenticate('twitter',{ scope: ['profile'] })));
+
+router.get('/twitter/callback',passport.authenticate('twitter',{failureRedirect:"/login"}),function(req, res) {
+    const {_id} = req.user;
+    const token = signToken(_id);
+    res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
+    res.redirect('/');
+});
+
 
 
 
