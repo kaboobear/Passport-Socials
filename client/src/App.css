@@ -481,6 +481,10 @@ textarea:focus::placeholder {
   padding: 0 4px
 }
 
+.log-btn-wrap :nth-child(2){
+  display: none;
+}
+
 .log-btn-wrap a{
   width: 100%;
   display: flex;

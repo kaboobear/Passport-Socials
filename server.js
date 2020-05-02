@@ -8,6 +8,7 @@ const passport = require("passport");
 const db = require("./config/keys").mongoURI;
 const https = require('https');
 const fs = require('fs');
+var sslRedirect = require('heroku-ssl-redirect');
 
 
 const user_route = require("./routes/user_route");
@@ -17,6 +18,7 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());
+app.use(sslRedirect());
 app.use(cookieParser());
 app.use(session({secret:'kaboo',resave:true,saveUninitialized:true}))
 app.use(passport.initialize());

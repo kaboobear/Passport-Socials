@@ -57,31 +57,6 @@ passport.use(new GitHubStrategy({
   }
 ));
 
-
-passport.use(new FacebookStrategy({
-    clientID: '2335655800048641',
-    clientSecret: '5c77ae2592dbae2f1aa19477dcb99f84',
-    callbackURL: "/user/facebook/callback",
-  },
-  function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
-
-    let email = profile.emails[0].value;
-    let login = profile.displayName;
-    if(email === null) return done(null, false, { error:true })
-
-    User.findOne({'mail':email},(err,user)=>{
-        if(err) return done(err);
-        if(user)return done(null,user)
-        else{
-            const newUser = new User({username:login,mail:email,password:'social'});
-            newUser.save().then(createdUser=> done(null,createdUser))
-                          .catch(err => {console.log(err)})
-        }
-    })
-  }
-));
-
 passport.use(new GoogleStrategy({
     clientID: '1033091184223-f3a367k9fj16m63l3tjqf8o8sahu2alo.apps.googleusercontent.com',
     clientSecret: 'h5AfooMfYo5lvT4gi7T7SDTA',
@@ -127,6 +102,30 @@ function(accessToken, refreshToken, profile, done) {
   })
 }
 ));
+
+// passport.use(new FacebookStrategy({
+//   clientID: '2335655800048641',
+//   clientSecret: '5c77ae2592dbae2f1aa19477dcb99f84',
+//   callbackURL: "/user/facebook/callback",
+// },
+// function(accessToken, refreshToken, profile, done) {
+//   console.log(profile);
+
+//   let email = profile.emails[0].value;
+//   let login = profile.displayName;
+//   if(email === null) return done(null, false, { error:true })
+
+//   User.findOne({'mail':email},(err,user)=>{
+//       if(err) return done(err);
+//       if(user)return done(null,user)
+//       else{
+//           const newUser = new User({username:login,mail:email,password:'social'});
+//           newUser.save().then(createdUser=> done(null,createdUser))
+//                         .catch(err => {console.log(err)})
+//       }
+//   })
+// }
+// ));
 
 
 

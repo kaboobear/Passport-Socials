@@ -103,18 +103,6 @@ router.get('/github/callback',passport.authenticate('github',{failureRedirect:"/
 
 
 
-router.get('/facebook',
-  (passport.authenticate('facebook')));
-
-router.get('/facebook/callback',passport.authenticate('facebook',{failureRedirect:"/login"}),function(req, res) {
-    const {_id} = req.user;
-    const token = signToken(_id);
-    res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
-    res.redirect('/');
-});
-
-
-
 router.get('/google',
   (passport.authenticate('google',{ scope: ['profile'] })));
 
@@ -125,6 +113,8 @@ router.get('/google/callback',passport.authenticate('google',{failureRedirect:"/
     res.redirect('/');
 });
 
+
+
 router.get('/twitter',
   (passport.authenticate('twitter',{ scope: ['profile'] })));
 
@@ -134,6 +124,18 @@ router.get('/twitter/callback',passport.authenticate('twitter',{failureRedirect:
     res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
     res.redirect('/');
 });
+
+
+
+// router.get('/facebook',
+//   (passport.authenticate('facebook')));
+
+// router.get('/facebook/callback',passport.authenticate('facebook',{failureRedirect:"/login"}),function(req, res) {
+//     const {_id} = req.user;
+//     const token = signToken(_id);
+//     res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
+//     res.redirect('/');
+// });
 
 
 
