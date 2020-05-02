@@ -45,7 +45,7 @@ passport.use(new GitHubStrategy({
     let {login,email}=profile._json
     if(email === null) return done(null, false, { error:true })
 
-    User.findOne({'mail':email},(err,user)=>{
+    User.findOne({'username':login},(err,user)=>{
         if(err) return done(err);
         if(user)return done(null,user)
         else{
@@ -90,11 +90,10 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, done) {
     console.log(profile);
 
-    let email = profile.emails[0].value;
-    let login = profile.displayName;
-    if(email === null) return done(null, false, { error:true })
+    const login = profile._json.name;
+    const email = 'Nomail';
 
-    User.findOne({'mail':email},(err,user)=>{
+    User.findOne({'username':login},(err,user)=>{
         if(err) return done(err);
         if(user)return done(null,user)
         else{
@@ -114,11 +113,10 @@ passport.use(new TwitterStrategy({
 function(accessToken, refreshToken, profile, done) {
   console.log(profile);
 
-  let email = profile.emails[0].value;
   let login = profile._json.name;
-  if(email === null) return done(null, false, { error:true })
+  const email = "Nomail"
 
-  User.findOne({'mail':email},(err,user)=>{
+  User.findOne({'username':login},(err,user)=>{
       if(err) return done(err);
       if(user)return done(null,user)
       else{
