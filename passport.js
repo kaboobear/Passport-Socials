@@ -85,7 +85,8 @@ passport.use(new TwitterStrategy({
   consumerKey: 'W7VI3RuOTXwt7bFWagx0nUKXe',
   consumerSecret: 'wGwWPCIGl4O9Sc4Bcla6OcRMkGWm9xEzOSNsAch2A83SwR3qII',
   callbackURL: "/user/twitter/callback",
-  includeEmail: true
+  userProfileURL  : 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true',
+  passReqToCallback : true
 },
 function(accessToken, refreshToken, profile, done) {
   console.log(profile);
