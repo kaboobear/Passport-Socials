@@ -103,11 +103,13 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.use(new TwitterStrategy({
-  clientID: 'W7VI3RuOTXwt7bFWagx0nUKXe',
-  clientSecret: 'wGwWPCIGl4O9Sc4Bcla6OcRMkGWm9xEzOSNsAch2A83SwR3qII',
+  consumerKey: 'W7VI3RuOTXwt7bFWagx0nUKXe',
+  consumerSecret: 'wGwWPCIGl4O9Sc4Bcla6OcRMkGWm9xEzOSNsAch2A83SwR3qII',
   callbackURL: "/user/twitter/callback",
 },
 function(accessToken, refreshToken, profile, done) {
+  console.log(profile);
+
   let email = profile.emails[0].value;
   let login = profile.displayName;
   if(email === null) return done(null, false, { error:true })
