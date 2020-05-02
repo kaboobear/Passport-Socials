@@ -104,7 +104,7 @@ router.get('/github/callback',passport.authenticate('github',{failureRedirect:"/
 
 
 router.get('/google',
-  (passport.authenticate('google',{ scope: ['profile'] })));
+  (passport.authenticate('google',{ scope: ['profile','mail'] })));
 
 router.get('/google/callback',passport.authenticate('google',{failureRedirect:"/login"}),function(req, res) {
     const {_id} = req.user;
@@ -116,7 +116,7 @@ router.get('/google/callback',passport.authenticate('google',{failureRedirect:"/
 
 
 router.get('/twitter',
-  (passport.authenticate('twitter',{ scope: ['profile'] })));
+  (passport.authenticate('twitter',{ scope: ['profile','mail'] })));
 
 router.get('/twitter/callback',passport.authenticate('twitter',{failureRedirect:"/login"}),function(req, res) {
     const {_id} = req.user;
