@@ -18,6 +18,7 @@
 + Clone this repo to your computer
 + "npm run dev" to run front-end and back-end(on port 3000 and 5000)
 + "npm install" to install necessary modules
++ Or just open the [Link](http://heroku-test-kaboo4.herokuapp.com/)
 
 
 
