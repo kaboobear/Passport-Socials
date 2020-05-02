@@ -481,9 +481,6 @@ textarea:focus::placeholder {
   padding: 0 4px
 }
 
-.log-btn-wrap :nth-child(2){
-  display: none;
-}
 
 .log-btn-wrap a{
   width: 100%;
@@ -502,15 +499,15 @@ textarea:focus::placeholder {
   background: #333;
 }
 
-.log-btn-wrap:nth-child(2) a{
+/* .log-btn-wrap:nth-child(2) a{
   background: #3b5998;
-}
+} */
 
-.log-btn-wrap:nth-child(3) a{
+.log-btn-wrap:nth-child(2) a{
   background: #d44638;
 }
 
-.log-btn-wrap:nth-child(4) a{
+.log-btn-wrap:nth-child(3) a{
   background: #00acee;
 }
 
@@ -527,17 +524,17 @@ textarea:focus::placeholder {
   background-size: contain;
 }
 
-.log-btn-wrap:nth-child(2) a:before{
+/* .log-btn-wrap:nth-child(2) a:before{
   background: url(img/fb.png) no-repeat center;
   background-size: contain;
-}
+} */
 
-.log-btn-wrap:nth-child(3) a:before{
+.log-btn-wrap:nth-child(2) a:before{
   background: url(img/google.png) no-repeat center;
   background-size: 90%;
 }
 
-.log-btn-wrap:nth-child(4) a:before{
+.log-btn-wrap:nth-child(3) a:before{
   background: url(img/tw.png) no-repeat center;
   background-size: 85%;
 }
