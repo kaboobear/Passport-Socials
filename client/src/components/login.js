@@ -99,9 +99,9 @@ class Login extends React.Component {
                                 <a href="/user/github"></a>
                             </div>
 
-                            <div className="log-btn-wrap">
+                            {/* <div className="log-btn-wrap">
                                 <a href="/user/facebook"></a>
-                            </div>
+                            </div> */}
 
                             <div className="log-btn-wrap">
                                 <a href="/user/google"></a>
