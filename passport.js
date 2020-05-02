@@ -64,6 +64,8 @@ passport.use(new FacebookStrategy({
     callbackURL: "/user/facebook/callback",
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+
     let email = profile.emails[0].value;
     let login = profile.displayName;
     if(email === null) return done(null, false, { error:true })
@@ -86,6 +88,8 @@ passport.use(new GoogleStrategy({
     callbackURL: "/user/google/callback",
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+
     let email = profile.emails[0].value;
     let login = profile.displayName;
     if(email === null) return done(null, false, { error:true })
@@ -111,7 +115,7 @@ function(accessToken, refreshToken, profile, done) {
   console.log(profile);
 
   let email = profile.emails[0].value;
-  let login = profile.displayName;
+  let login = profile._json.name;
   if(email === null) return done(null, false, { error:true })
 
   User.findOne({'mail':email},(err,user)=>{
