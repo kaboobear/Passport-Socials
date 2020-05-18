@@ -8,8 +8,6 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-<br>
-
 ### [Project Demo](http://heroku-test-kaboo4.herokuapp.com/)
 
 <br>
