@@ -8,10 +8,6 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-<br>
-
-### Project link [Here](http://heroku-test-kaboo4.herokuapp.com/)
-
 
 
 ### What is this?
@@ -25,8 +21,9 @@
 + "npm run dev" to run front-end and back-end(on port 3000 and 5000)
 + "npm install" to install necessary modules
 
+<hr>
 
-
+### Project link [Here](http://heroku-test-kaboo4.herokuapp.com/)
 
 <hr>
 
