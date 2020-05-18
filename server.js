@@ -6,9 +6,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("passport");
 const db = require("./config/keys").mongoURI;
-const https = require('https');
-const fs = require('fs');
-
 
 const user_route = require("./routes/user_route");
 

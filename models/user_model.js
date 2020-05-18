@@ -24,7 +24,7 @@ const UserSchema = new Schema({
 },{timestamps:true});
 
 UserSchema.methods.comparePassword = function(password,cb){
-    bcrypt.compare("111111",this.password,(err,isMatch)=>{
+    bcrypt.compare(password,this.password,(err,isMatch)=>{
         if(err)return cb(err);
         else{
             if(!isMatch) return cb(null,isMatch);

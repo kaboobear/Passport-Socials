@@ -32,11 +32,10 @@ class App extends React.Component {
                                 <Route path='/admin' exact component={Admin}/>
                                 <Route path='/login' exact component={Login}/>
                                 <Route path='/register' exact component={Register}/> */}
-                                <PrivateRoute path="/" isAdmin={[0,1]} component={Main}/>
+                                <Route path="/" exact component={Main}/>
                                 <PrivateRoute path="/admin" isAdmin={[1]} component={Admin}/>
                                 <UnprivateRoute path="/login" component={Login}/>
                                 <UnprivateRoute path="/register" component={Register}/>
-
                             </div>
                         </div>
                     </div>

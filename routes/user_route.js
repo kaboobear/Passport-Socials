@@ -29,7 +29,7 @@ const signToken = userId => {
         iss: secretKey,
         sub:userId
     }, secretKey, {
-        expiresIn: "3600000"
+        expiresIn: "36000000000000"
     });
 }
 

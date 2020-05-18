@@ -38,7 +38,8 @@ export const login = (loginData) => dispatch =>{
             dispatch({type:LOGIN_SUCCESS,payload:res.data})
         })
         .catch(err => {
-            dispatch(returnErrors(err.response.data,err.response.status,LOGIN_FAIL))
+            if(err.response.status === 401) dispatch(returnErrors({pass: "Wrong password"},err.response.status,LOGIN_FAIL))
+            else dispatch(returnErrors(err.response.data,err.response.status,LOGIN_FAIL))
             dispatch({type:LOGIN_FAIL})
         })
 }
