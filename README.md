@@ -9,7 +9,7 @@
 [![MIT License][license-shield]][license-url]
 
 
-### Check project [DEMO](http://heroku-test-kaboo4.herokuapp.com/)
+### Project [DEMO](http://heroku-test-kaboo4.herokuapp.com/)
 
 ### What is this?
 + Just my new technologies testing
