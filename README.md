@@ -10,7 +10,7 @@
 
 <br>
 
-### [DEMO](http://heroku-test-kaboo4.herokuapp.com/)
+### [Project Demo](http://heroku-test-kaboo4.herokuapp.com/)
 
 
 ### What is this?
