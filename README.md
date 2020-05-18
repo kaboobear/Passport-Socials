@@ -23,7 +23,7 @@
 
 <hr>
 
-### Project link [Here](http://heroku-test-kaboo4.herokuapp.com/)
+### Project demo [Here](http://heroku-test-kaboo4.herokuapp.com/)
 
 <hr>
 
