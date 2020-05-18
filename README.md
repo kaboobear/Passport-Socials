@@ -8,6 +8,9 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
+
+### Check project [DEMO](http://heroku-test-kaboo4.herokuapp.com/)
+
 ### What is this?
 + Just my new technologies testing
 + Saving my progres on the GitHub repo
@@ -18,7 +21,7 @@
 + Clone this repo to your computer
 + "npm run dev" to run front-end and back-end(on port 3000 and 5000)
 + "npm install" to install necessary modules
-+ Or just open the [Link](http://heroku-test-kaboo4.herokuapp.com/)
+
 
 
 
