@@ -8,8 +8,9 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-
+<hr>
 ### Project [DEMO](http://heroku-test-kaboo4.herokuapp.com/)
+<hr>
 
 ### What is this?
 + Just my new technologies testing
